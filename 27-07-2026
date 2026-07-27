@@ -1,0 +1,20 @@
+class Solution {
+    public int digSum(int n) {
+        int sum=0;
+        while(n>0){
+            int digit=n%10;
+            sum+=digit*digit;
+            n/=10;
+        }
+        return sum;
+    }
+    public boolean isHappy(int n){
+        int init =n;
+        int next =digSum(n);
+        while(next!=1&&init!=next){
+            init =digSum(init);
+            next =digSum(digSum(next));
+        }
+        return next==1;
+    }
+}
