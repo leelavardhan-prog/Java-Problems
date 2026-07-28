@@ -1,0 +1,15 @@
+class Solution {
+    public static void reOrder(int[] arr,int index,int proper){
+        if(index==arr.length){
+            Arrays.fill(arr,proper,arr.length,0);
+            return;
+        }
+        if(arr[index]!=0){
+            arr[proper]=arr[index];proper++;
+        }
+        reOrder(arr,index+1,proper); 
+    }
+    public void moveZeroes(int[] nums) {
+        reOrder(nums,0,0);
+    }
+}
