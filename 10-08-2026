@@ -1,0 +1,54 @@
+import java.util.Scanner;
+
+public class Main {
+    public static int gcd(int a, int b) {
+        while (b != 0) {
+            int t = b;
+            b = a % b;
+            a = t;
+        }
+        return a;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int n1 = sc.nextInt();
+        int n2 = sc.nextInt();
+
+        int g = gcd(n1, n2);
+        boolean found = false;
+
+        for (int i = 2; i * i <= g; i++) {
+            if (g % i == 0) {
+                boolean prime = true;
+                for (int j = 2; j * j <= i; j++) {
+                    if (i % j == 0) {
+                        prime = false;
+                        break;
+                    }
+                }
+
+                if (prime) {
+                    System.out.print(i + " ");
+                    found = true;
+                }
+
+                while (g % i == 0) {
+                    g /= i;
+                }
+            }
+        }
+
+        if (g > 1) {
+            System.out.print(g);
+            found = true;
+        }
+
+        if (!found) {
+            System.out.print(-1);
+        }
+
+        sc.close();
+    }
+}
