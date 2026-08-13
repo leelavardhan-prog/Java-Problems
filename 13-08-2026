@@ -1,0 +1,24 @@
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        Arrays.sort(nums);
+        for (int ind = 0; ind < nums.length - 2; ind++) {
+            if (ind > 0 && nums[ind] == nums[ind - 1]) continue;
+            int start = ind + 1, end = nums.length - 1;
+            while (start < end) {
+                int sum = nums[ind] + nums[start] + nums[end];
+                if (sum == 0) {
+                    result.add(Arrays.asList(nums[ind],
+                             nums[start], nums[end]));
+                    start++;end--;
+                    while (start < end && 
+                        nums[start] == nums[start - 1]) start++;  
+                    while (start < end &&
+                         nums[end] == nums[end + 1]) end--; 
+                } else if (sum < 0) start++;
+                else end--;
+            }
+        }
+        return result;
+    }
+}
