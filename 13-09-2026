@@ -1,0 +1,91 @@
+class Solution {
+    public long minOperations(int[] nums) {
+        long ans = 0;
+        for (int x : nums) {
+            long p = nearestPalindrome(x);
+            ans += Math.abs((long) x - p) / 2;
+        }
+        return ans;
+    }
+    private long nearestPalindrome(long x) {
+        String s = String.valueOf(x);
+        int len = s.length();
+        int half = (len + 1) / 2;
+        long prefix = Long.parseLong(s.substring(0, half));
+        long best = Long.MAX_VALUE;
+        long pow = 1;
+        for (int i = 1; i < half; i++) {
+            pow *= 10;
+        }
+        for (int first = 1; first <= 9; first++) {
+            if (first % 2 != x % 2)
+                continue;
+            long low = first * pow;
+            long high = (first + 1) * pow - 1;
+            long p = Math.max(low, Math.min(high, prefix));
+            for (long q = p - 1; q <= p + 1; q++) {
+                if (q >= low && q <= high) {
+                    long pal = makePalindrome(q, len);
+                    if (pal > 0 && pal % 2 == x % 2) {
+                        if (Math.abs(pal - x) < Math.abs(best - x)) {
+                            best = pal;
+                        }
+                    }
+                }
+            }
+        }
+        if (len > 1) {
+            int newLen = len - 1;
+            int newHalf = (newLen + 1) / 2;
+            String prefixStr;
+            if (x % 2 == 0) {
+                if (newLen == 1) {
+                    prefixStr = "8";
+                } else {
+                    prefixStr = "8" + "9".repeat(newHalf - 1);
+                }
+            } else {
+                prefixStr = "9".repeat(newHalf);
+            }
+            long pal = makePalindrome(
+                Long.parseLong(prefixStr), newLen
+            );
+            if (pal > 0 && pal % 2 == x % 2) {
+                if (Math.abs(pal - x) < Math.abs(best - x)) {
+                    best = pal;
+                }
+            }
+        }
+        int newLen = len + 1;
+        int newHalf = (newLen + 1) / 2;
+        String prefixStr;
+        if (x % 2 == 0) {
+            prefixStr = "2" + "0".repeat(newHalf - 1);
+        } else {
+            prefixStr = "1" + "0".repeat(newHalf - 1);
+        }
+        long pal = makePalindrome(
+            Long.parseLong(prefixStr), newLen
+        );
+        if (pal > 0 && pal % 2 == x % 2) {
+            if (Math.abs(pal - x) < Math.abs(best - x)) {
+                best = pal;
+            }
+        }
+        return best;
+    }
+    private long makePalindrome(long prefix, int len) {
+        String s = String.valueOf(prefix);
+        StringBuilder sb = new StringBuilder(s);
+        int start;
+        if (len % 2 == 0) {
+            start = s.length() - 1;
+        } else {
+            start = s.length() - 2;
+        }
+        for (int i = start; i >= 0; i--) {
+            sb.append(s.charAt(i));
+        }
+        return Long.parseLong(sb.toString());
+    }
+}©leetcode
