@@ -1,0 +1,44 @@
+import java.util.Scanner;
+public class main{
+    public static void main(String[] args){
+        Scanner scan=new Scanner(System.in);
+        int units=scan.nextInt();
+        int rf=scan.nextInt();
+        int bill;
+        int reb;
+        int tb;
+        if(units<=100&&rf==1){
+         bill=units*2;
+         reb=(bill*5)/100; 
+         tb=bill-reb+75;
+         System.out.println(tb);  
+        }
+        else if(units<=100&&rf==0){
+         bill=units*2;
+         tb=bill+75;
+         System.out.println(tb);  
+        }
+        else if((units>100&&units<=200)&&rf==1){
+            bill=200+(units-100)*3;
+            reb=(bill*5)/100;
+            tb=bill-reb+75;
+            System.out.println(tb); 
+        }
+        else if((units>100&&units<=200)&&rf==0){
+            bill=200+(units-100)*3;
+            tb=bill+75;
+            System.out.println(tb); 
+        }
+        else if(units>200&&rf==1){
+            bill=500+(units-200)*5;
+            reb=(bill*5)/100;
+            tb=bill-reb+75;
+            System.out.println(tb);
+        }
+        else if(units>200&&rf==0){
+            bill=500+(units-200)*5;
+            tb=bill+75;
+            System.out.println(tb);
+        }
+    }
+}
