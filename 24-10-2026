@@ -1,0 +1,11 @@
+import java.util.*;
+
+public class degree {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        
+        double far = scan.nextDouble();
+        double cel = ((far - 32) * 5) / 9;
+        System.out.printf("%.2f", cel);
+    }
+}
