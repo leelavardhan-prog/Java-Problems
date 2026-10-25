@@ -1,0 +1,38 @@
+import java.util.Arrays;
+
+class Solution {
+    public long maximizeSum(int[] nums, int k) {
+        long sum = 0;
+        int n = nums.length;
+        int[] gains = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            sum += nums[i];
+            int max = getMaxNumber(nums[i]);
+            gains[i] = max - nums[i];
+        }
+
+        Arrays.sort(gains);
+
+        for (int i = n - 1; i >= 0 && k > 0; i--, k--) {
+            if (gains[i] <= 0) {
+                break;
+            }
+            sum += gains[i];
+        }
+
+        return sum;
+    }
+
+    private int getMaxNumber(int num) {
+        char[] digits = String.valueOf(num).toCharArray();
+        Arrays.sort(digits);
+
+        int result = 0;
+        for (int i = digits.length - 1; i >= 0; i--) {
+            result = result * 10 + (digits[i] - '0');
+        }
+
+        return result;
+    }
+}
