@@ -1,0 +1,19 @@
+class Solution {
+    public void sortColors(int[] nums) {
+        int zer=0,cur=0,two=nums.length-1;
+        while(cur<=two){
+            if(nums[cur]==2){
+                int temp = nums[cur];
+                nums[cur]=nums[two];
+                nums[two] = temp;
+                two--;
+            }
+            else if(nums[cur]==0){
+                int temp = nums[cur];
+                nums[cur]=nums[zer];
+                nums[zer]=temp;
+                zer++;cur++;
+            }else cur++;
+        }
+    }
+}
