@@ -1,0 +1,81 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     struct ListNode *next;
+ * };
+ */
+
+struct Heap {
+    struct ListNode* arr[10001];
+    int size;
+};
+
+void swap(struct ListNode** a, struct ListNode** b) {
+    struct ListNode* temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+void push(struct Heap* h, struct ListNode* node) {
+    int i = h->size++;
+    h->arr[i] = node;
+
+    while (i > 0) {
+        int p = (i - 1) / 2;
+        if (h->arr[p]->val <= h->arr[i]->val) break;
+        swap(&h->arr[p], &h->arr[i]);
+        i = p;
+    }
+}
+
+struct ListNode* pop(struct Heap* h) {
+    if (h->size == 0) return NULL;
+
+    struct ListNode* root = h->arr[0];
+    h->arr[0] = h->arr[--h->size];
+
+    int i = 0;
+    while (1) {
+        int l = 2 * i + 1;
+        int r = 2 * i + 2;
+        int smallest = i;
+
+        if (l < h->size && h->arr[l]->val < h->arr[smallest]->val)
+            smallest = l;
+        if (r < h->size && h->arr[r]->val < h->arr[smallest]->val)
+            smallest = r;
+
+        if (smallest == i) break;
+
+        swap(&h->arr[i], &h->arr[smallest]);
+        i = smallest;
+    }
+
+    return root;
+}
+
+struct ListNode* mergeKLists(struct ListNode** lists, int listsSize) {
+    struct Heap h;
+    h.size = 0;
+
+    for (int i = 0; i < listsSize; i++) {
+        if (lists[i]) push(&h, lists[i]);
+    }
+
+    struct ListNode dummy;
+    dummy.next = NULL;
+    struct ListNode* tail = &dummy;
+
+    while (h.size > 0) {
+        struct ListNode* node = pop(&h);
+        tail->next = node;
+        tail = tail->next;
+
+        if (node->next) {
+            push(&h, node->next);
+        }
+    }
+
+    return dummy.next;
+}
