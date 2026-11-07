@@ -1,0 +1,19 @@
+class Solution {
+    public int trap(int[] height) {
+        int start=0,end=height.length-1,lMax=0,rMax=0;
+        int count=0;
+        while(start<end){
+            if(height[start]<height[end]){
+                if(lMax<height[start]) lMax=height[start];
+                count+=lMax-height[start];
+                start++;
+            }
+            else{
+                if(rMax<height[end]) rMax=height[end];
+                count+=rMax-height[end];
+                end--;
+            }
+        }
+        return count;
+    }
+}
