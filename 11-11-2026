@@ -1,0 +1,36 @@
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class Codechef
+{
+    public static void main (String[] args) throws java.lang.Exception
+    {
+        Scanner sc = new Scanner(System.in);
+        int T = sc.nextInt();
+        while (T-- > 0){
+            int N = sc.nextInt();
+            int D = sc.nextInt();
+            int[] A = new int[N];
+            int[] B = new int[N];
+            for (int i = 0; i < N; i++){
+                A[i] = sc.nextInt();
+            }
+
+            for (int i = 0; i < N; i++){
+                B[i] = sc.nextInt();
+            }
+            int cost1 = 0;
+            int cost2 = 0;
+            int costBoth = 0;
+            for (int i = 0; i < N; i++){
+                cost1 += A[i];
+                cost2 += B[i];
+                costBoth += Math.min(A[i], B[i]);
+            }
+            int ans = Math.min(cost1 + D,Math.min(cost2 + D, costBoth + 2 * D));
+            System.out.println(ans);
+        }
+        sc.close();
+    }
+}
